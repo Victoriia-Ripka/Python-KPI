@@ -17,10 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from myapp import views
+# from myapp.views import CarDetailView
 
 urlpatterns = [
     path('', views.home, name='home'),
     path('cars/', views.cars_view, name='cars'),
+    # path('cars/<slug:car_slug>/', views.CarDetailView.as_view(), name='car_detail'),
     path('form/', views.form_view, name='form'),
     path('admin/', admin.site.urls),
 ]

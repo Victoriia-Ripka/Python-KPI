@@ -17,6 +17,7 @@
             {% for car, row in df.iterrows %}
                 <li class="column">
                         <p>{{ car }}</p>
+                        {% comment %} <a href="{{ car.get_absolute_url }}">{{ car }}</a> {% endcomment %}
                         <p>{{ row.km }}km</p>
                         <p>{{ row.h }}h</p>
                         <p>{{ row.year }}</p>
