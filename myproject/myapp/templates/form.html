@@ -1,10 +1,91 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block content %}
+<main class="form-page">
   <h1>Car Registration Form</h1>
-  <form method="post" action="{% url 'form' %}">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Submit</button>
-  </form>
+  <div class="form-cont">
+    <form method="post" action="{% url 'form' %}" class="contacts__form">
+        {% csrf_token %}
+        
+        <div class="contacts__form-extra-cont">
+        <div class="contacts__input-cont">
+            {{ form.name.label_tag }}
+            {{ form.name }}
+        </div>
+        
+        <div class="contacts__input-cont">
+            {{ form.surname.label_tag }}
+            {{ form.surname }}
+        </div>
+        </div>
+
+        <div class="contacts__form-extra-cont">
+        <div class="contacts__input-cont">
+            {{ form.date_of_birth.label_tag }}
+            {{ form.date_of_birth }}
+        </div>
+        
+        <div class="contacts__input-cont">
+            {{ form.email.label_tag }}
+            {{ form.email }}
+        </div>
+        </div>
+
+        <div class="contacts__input-cont">
+        {{ form.phone_number.label_tag }}
+        {{ form.phone_number }}
+        </div>
+
+        <div class="contacts__input-cont">
+        {{ form.car_model.label_tag }}
+        {{ form.car_model }}
+        </div>
+
+        <div class="contacts__input-cont">
+        {{ form.comments.label_tag }}
+        {{ form.comments }}
+        </div>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <ul class="contacts__details-cont">
+            <li class="contacts__detail-cont">
+                <div class="contacts__detail-img-first-back">
+                    <div class="contacts__detail-img-second-back">
+                        <img class="contacts__detail-img" src="{% static 'img/phone-min.png' %}">
+                    </div>
+                </div>
+                <div>
+                    <p class="contacts__detail-title">Phone</p>
+                    <p class="contacts__detail-text">38 482 394 123</p>
+                </div>
+            </li>
+            <li class="contacts__detail-cont">
+                <div class="contacts__detail-img-first-back">
+                    <div class="contacts__detail-img-second-back">
+                        <img class="contacts__detail-img" src="{% static 'img/filled-email-min.png' %}">
+                    </div>
+                </div>
+                <div>
+                    <p class="contacts__detail-title">Email</p>
+                    <p class="contacts__detail-text">info@gmail.com</p>
+                </div>
+            </li>
+            <li class="contacts__detail-cont">
+                <div class="contacts__detail-img-first-back">
+                    <div class="contacts__detail-img-second-back">
+                        <img class="contacts__detail-img" src="{% static 'img/clock-min.png' %}">
+                    </div>
+                </div>
+                <div>
+                    <p class="contacts__detail-title">Working hours</p>
+                    <p class="contacts__detail-text bold">8:00 AM to 7:30 PM</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</main>
 {% endblock %}

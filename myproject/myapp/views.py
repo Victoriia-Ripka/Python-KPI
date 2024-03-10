@@ -22,5 +22,6 @@ def cars_view(request):
    return render(request, "cars.html", {"df": df})
 
 def form_view(request):
-   form = CarForm()
+   cars = ["fiat", 'ford', 'volvo', 'audi', 'mazda', 'bmw', 'toyota']
+   form = CarForm(car_models=cars)
    return render(request, "form.html", {'form': form})
