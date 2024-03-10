@@ -1,40 +1,42 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Cars Data</h1>
+<main class="home">
+    <div class="cars-cont">
+        <h1 class="welcome-heading">Cars Data</h1>
 
-<div class="head">
-    <p>car</p>
-    <p>Kilometers</p>
-    <p>Hours</p>
-    <p>Year</p>
-    <p>Date</p>
-</div>
-<ul class="table-body">
-    {% for car, row in df.iterrows %}
-        <li class="column">
-            <div class="car-info">
-                <p>
-                    {{ car }}
-                </p>
+        <div class="head">
+            <p>car</p>
+            <p>Kilometers</p>
+            <p>Hours</p>
+            <p>Year</p>
+            <p>Date</p>
+        </div>
+        <ul class="table-body">
+            {% for car, row in df.iterrows %}
+                <li class="column">
+                        <p>
+                            {{ car }}
+                        </p>
 
-                <p>
-                    {{ row.km }}km
-                </p>
+                        <p>
+                            {{ row.km }}km
+                        </p>
 
-                <p>
-                    {{ row.h }}h
-                </p>
+                        <p>
+                            {{ row.h }}h
+                        </p>
 
-                <p>
-                    {{ row.year }}
-                </p>
+                        <p>
+                            {{ row.year }}
+                        </p>
 
-                <p>
-                    {{ row.date }}
-                </p>
-            </div>
-        </li>
-    {% endfor %}
-</ul>
+                        <p>
+                            {{ row.date }}
+                        </p>
+                </li>
+            {% endfor %}
+        </ul>
+    <div>
+</main>
 {% endblock %}
