@@ -1,6 +1,27 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block content %}
-    <h2>Home Page</h2>
-    <p>This is the content of the home page.</p>
+<main class="home">
+   <div class="welcome-section">
+      <h1 class="welcome-heading">Welcome to <span class="app-name">Fuel Consumption Accounting App</span></h1>
+      <p class="welcome-description">Explore and manage the fuel consumption details of your vehicles with our intuitive app. Keep track of kilometers traveled, hours on the road, and fuel efficiency effortlessly.</p>
+   </div>
+
+
+   <div class="slider">
+      <div><img src="{% static 'img/audi.jpeg' %}" alt="Audi"></div>
+      <div><img src="{% static 'img/ford.jpeg' %}" alt="Ford"></div>
+      <div><img src="{% static 'img/fiat.jpeg' %}" alt="Fiat"></div>
+      <div><img src="{% static 'img/bmw.jpeg' %}" alt="BMW"></div>
+      <div><img src="{% static 'img/mazda.jpeg' %}" alt="Mazda"></div>
+      <div><img src="{% static 'img/toyota.jpeg' %}" alt="Toyota"></div>
+      <div><img src="{% static 'img/volvo.jpeg' %}" alt="Volvo"></div>
+   </div>
+</main>
+<div class="features-section">
+   <p class="features-text">Efficiently manage your vehicle data, calculate fuel consumption, and stay informed about your fleet's performance. Whether you own a car, truck, or SUV, our app is designed to simplify your fuel tracking experience.</p>
+   <a href="{% url 'cars' %}" class="get-started-text">Get started today and take control of your fuel consumption records!</a>
+</div>
 {% endblock %}

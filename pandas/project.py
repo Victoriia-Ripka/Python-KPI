@@ -3,7 +3,7 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 
 
-cars = ["fiat", 'ford', 'volvo', 'lexus', 'mazda', 'bmw', 'toyota', 'toyota']
+cars = ["fiat", 'ford', 'volvo', 'audi', 'mazda', 'bmw', 'toyota', 'toyota']
 data = {
   "km": [20310, 12780, 40678, 15689, 25643, 38734, 30876, 30876],
   "h": [389, 200, 589, 248, 345, 489, 512, 512],

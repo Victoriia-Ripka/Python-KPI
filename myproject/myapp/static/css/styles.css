@@ -1,0 +1,195 @@
+body{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0 0 70px 0;
+}
+
+#content {
+    flex-grow: 1;
+}
+
+header{
+    position: fixed;
+    z-index: 5;
+    width: 100vw;
+    box-sizing: border-box;
+    border-bottom: 1px solid #797979;
+    background-color: #fff;
+    /* padding: 20px 0; */
+}
+
+.logo {
+    padding: 20px 0;
+    width: 380px;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+a {
+    color: #000;
+    font-size: 18px;
+    font-weight: 600;
+    text-transform: capitalize;
+    text-decoration: none;
+    padding: 2px 10px;
+
+    transition: color 0.3s ease;
+}
+
+a:hover,
+a:focus{
+    color: #005ADE;
+}
+
+.extra-header-cont{
+    height: 64px;
+}
+
+.home{
+    margin-top: 50px;
+    display: flex;
+    gap: 50px;
+}
+
+.welcome-section {
+    text-align: left;
+    padding: 50px 0;
+}
+
+.welcome-heading {
+    font-size: 32px;
+    font-weight: 500;
+    color: #0F2650;
+    line-height: 1.1;
+    margin: 0 0 20px;
+}
+
+.app-name {
+    color: #005ADE;
+}
+
+.welcome-description {
+    font-size: 18px;
+    line-height: 1.25;
+    font-weight: 500;
+    color: #414141;
+    margin-top: 0;
+}
+
+.slider{
+    width: 350px;
+}
+
+.features-section {
+    text-align: left;
+    margin: 50px 0;
+}
+
+.features-text {
+    font-size: 20px;
+    line-height: 1.25;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.get-started-text {
+    font-size: 24px;
+    line-height: 1.25;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.get-started-text:hover,
+.get-started-text:focus {
+    color: #005ADE;
+}
+
+.container{
+    width: 800px;
+    margin: 0 auto;
+}
+
+header>.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    color: white;
+    background-color: #005ADE;
+    border-radius: 30px;
+    padding: 20px 70px;
+    width: 800px;
+}
+
+footer>.p {
+    margin: 0;
+    width: 450px;
+}
+
+/* CARS PAGE */
+
+.head {
+    background-color: #d7f0ff;
+    height: 63px;
+    display: flex;
+    padding: 0 15px;
+    align-items: center;
+    border-radius: 20px 20px 0 0;
+    border: 1px solid #c6cacc;
+    justify-content: space-between;
+}
+
+.head p {
+    color: #21365d;
+    text-align: center;
+    font-family: "Plus Jakarta Sans";
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 120%;
+    text-transform: uppercase;
+    width: 102px;
+}
+
+.table-body {
+    margin: 0 0 70px;
+    background: #f7fcff;
+    padding: 15px 0;
+    border-radius: 0 0 20px 20px;
+}
+
+.table-body .column {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 15px;
+    padding: 8px 10px;
+}
+
+.table-body .column:not(:last-child) {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.20);
+}
+
+.table-body .car-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.table-body .car-info p {
+    margin: 0;
+    width: 102px;
+    text-align: center;
+    text-transform: capitalize;
+    max-width: 70px;
+    color: #000;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.2;
+}

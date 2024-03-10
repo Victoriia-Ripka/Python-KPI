@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,20 +7,42 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Fuel consumption accounting{% endblock %}</title>
+
+     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
 </head>
 <body>
     <header>
-        <h1>Welcome to Fuel consumption accounting App</h1>
-        <!-- Add header content here -->
+        <div class="container">
+            <p class="logo">Fuel consumption accounting</p>
+            <nav>
+                <a href="/">Home</a>
+                <a href="{% url 'cars' %}">Cars</a>
+                <a href="{% url 'form' %}">Form</a>
+            </nav>
+        </div>
     </header>
+    <div class="extra-header-cont"></div>
 
-    <div id="content">
+    <div id="content" class="container">
         {% block content %}{% endblock %}
     </div>
 
-    <footer>
-        <!-- Add footer content here -->
+    <footer class="container">
         <p>&copy;Fuel consumption accounting - Viktoriia Ripka - 2024</p>
     </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.slider').slick({
+                autoplay: true,
+                autoplaySpeed: 2000, 
+                dots: true,
+            });
+        });
+    </script>
 </body>
 </html>
