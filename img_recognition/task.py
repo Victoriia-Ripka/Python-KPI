@@ -1,35 +1,66 @@
 from PIL import Image, ImageDraw
 from program import load_image_file, face_locations
 import face_recognition
+import os
 
-# Load image
-image_path = "./imgs/stuard.jpg"
-image = Image.open(image_path)
+image_files = [
+    "./imgs/biden.jpeg",
+    "./imgs/building.jpg",
+    "./imgs/cat.jpg",
+    "./imgs/couple.jpeg",
+    "./imgs/hourse.jpg",
+    "./imgs/hourses.jpg",
+    "./imgs/mountain.jpg",
+    "./imgs/obama.jpeg",
+    "./imgs/people.jpeg",
+    "./imgs/person.jpeg",
+    "./imgs/stuard.jpg"
+]
 
-# Detect faces using your program
-face_locations_program = face_locations(load_image_file(image_path))
-print("program: ", face_locations_program)
+while True:
+    print("\nChoose an image:")
+    for i, img_path in enumerate(image_files, start=1):
+        print(f"{i}: {img_path}")
 
-# Draw red rectangles around detected faces
-draw_program = ImageDraw.Draw(image)
-for top, right, bottom, left in face_locations_program:
-    draw_program.rectangle([left, top, right, bottom], outline="red", width=2)
+    choice = input("Enter the number of the image (1-11) or '0' to exit: ")
 
-# Save the modified image
-image.save(f"recognized/p.jpg")
+    if choice == '0':
+        print("Exiting...")
+        break
 
-# Load image using face_recognition
-image = face_recognition.load_image_file(image_path)
+    try:
+        choice = int(choice)
+        if 1 <= choice <= len(image_files):
+            image_path = image_files[choice - 1]
+        else:
+            print("Invalid choice. Please enter a number between 1 and 11.")
+            continue
+    except ValueError:
+        print("Invalid input. Please enter a number.")
+        continue
 
-# Detect faces using face_recognition
-face_locations_fr = face_recognition.face_locations(image)
-print("face_recognition: ", face_locations_fr)
+    # Load the image
+    image = Image.open(image_path)
+    file_name, extension = os.path.splitext(os.path.basename(image_path))
 
-# Draw red rectangles around detected faces
-image = Image.open(image_path)
-draw_fr = ImageDraw.Draw(image)
-for top, right, bottom, left in face_locations_fr:
-    draw_fr.rectangle([left, top, right, bottom], outline="red", width=2)
+    # Detect faces using your program
+    face_locations_program = face_locations(load_image_file(image_path))
+    print("program: ", face_locations_program)
 
-# Save the modified image
-image.save(f"recognized/fr.jpg")
+    # Draw red rectangles around detected faces
+    draw_program = ImageDraw.Draw(image)
+    for top, right, bottom, left in face_locations_program:
+        draw_program.rectangle([left, top, right, bottom], outline="red", width=2)
+    image.save(f"recognized/{file_name}_p{extension}")
+
+    # Detect faces using face_recognition
+    image = face_recognition.load_image_file(image_path)
+    face_locations_fr = face_recognition.face_locations(image)
+    print("face_recognition: ", face_locations_fr)
+
+    # Draw red rectangles around detected faces
+    image = Image.open(image_path)
+    draw_fr = ImageDraw.Draw(image)
+    for top, right, bottom, left in face_locations_fr:
+        draw_fr.rectangle([left, top, right, bottom], outline="red", width=2)
+    image.save(f"recognized/{file_name}_fr{extension}")
