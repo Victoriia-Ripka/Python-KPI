@@ -102,10 +102,6 @@ def _raw_face_locations(img, number_of_times_to_upsample=1, model="hog"):
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5)
     return [(y, x+w, y+h, x) for (x, y, w, h) in faces]
-    # if model == "cnn":
-    #     return cnn_face_detector(img, number_of_times_to_upsample)
-    # else:
-    #     return face_detector(img, number_of_times_to_upsample)
 
 
 def face_locations(img, number_of_times_to_upsample=1, model="hog"):
@@ -119,10 +115,6 @@ def face_locations(img, number_of_times_to_upsample=1, model="hog"):
     :return: A list of tuples of found face locations in css (top, right, bottom, left) order
     """
     return [_trim_css_to_bounds(face, img.shape) for face in _raw_face_locations(img, number_of_times_to_upsample, model)]
-    # if model == "cnn":
-    #     return [_trim_css_to_bounds(_rect_to_css(face.rect), img.shape) for face in _raw_face_locations(img, number_of_times_to_upsample, "cnn")]
-    # else:
-    #     return [_trim_css_to_bounds(_rect_to_css(face), img.shape) for face in _raw_face_locations(img, number_of_times_to_upsample, model)]
 
 
 def _raw_face_locations_batched(images, number_of_times_to_upsample=1, batch_size=128):
