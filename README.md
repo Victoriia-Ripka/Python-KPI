@@ -12,3 +12,7 @@
 # myproject 
 > cd myproject
 > python manage.py runserver
+
+# img_recognition
+> cd img_recognition
+> python task.py
