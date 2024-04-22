@@ -16,3 +16,7 @@
 # img_recognition
 > cd img_recognition
 > python task.py
+
+# Forecasting
+> cd forecasting
+> python index.py
