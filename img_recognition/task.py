@@ -44,8 +44,8 @@ while True:
     file_name, extension = os.path.splitext(os.path.basename(image_path))
 
     # MY PROGRAM
-    image = load_image_file(image_path)
-    face_locations_program = face_locations(image)
+    image1 = load_image_file(image_path)
+    face_locations_program = face_locations(image1)
     print("program: ", face_locations_program)
 
     # Draw red rectangles around detected faces
@@ -55,8 +55,8 @@ while True:
     image.save(f"recognized/{file_name}_p{extension}")
 
     # FACE ROCOGNITION
-    image = face_recognition.load_image_file(image_path)
-    face_locations_fr = face_recognition.face_locations(image)
+    image2 = face_recognition.load_image_file(image_path)
+    face_locations_fr = face_recognition.face_locations(image2)
     print("face_recognition: ", face_locations_fr)
 
     # Draw red rectangles around detected faces
