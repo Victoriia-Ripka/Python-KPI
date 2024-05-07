@@ -1,11 +1,13 @@
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 from statsmodels.tsa.arima.model import ARIMA
+from sklearn.metrics import mean_squared_error
 import warnings
 warnings.filterwarnings('ignore')
 
-# Завантаження даних
+# Load data
 df = pd.read_csv('data.csv', parse_dates=[0])
 
 # Plot site activity
@@ -32,15 +34,24 @@ print(model_fit.summary())
 
 # Diagnostic plots
 residuals = model_fit.resid
-fig, ax = plt.subplots(1, 3, figsize=(15, 5))  # Adding one more plot for PACF
+fig, ax = plt.subplots(1, 2, figsize=(12, 5))
 plot_acf(residuals, ax=ax[0])
 plot_pacf(residuals, ax=ax[1])
-ax[2].plot(df['Date'], df['traffic'].diff(1))  # Plot differenced series to check for trend
-ax[2].set_title("Differenced Series (lag=1)")
 plt.show()
 
-# Seasonal decomposition
-from statsmodels.tsa.seasonal import seasonal_decompose
-result = seasonal_decompose(df['traffic'], model='additive', period=30)  # Assuming a period of 30 days
-result.plot()
+# Forecast
+forecast = model_fit.forecast(len(test))
+
+# Calculate Mean Squared Error
+mse = mean_squared_error(test, forecast)
+print(f"Mean Squared Error: {mse}")
+
+# Plot forecast vs actuals
+plt.figure(figsize=(10, 6))
+plt.plot(df.index, df['traffic'], label='Actual')
+plt.plot(df.index[train_size:], forecast, label='Forecast', color='red')
+plt.xlabel("Date")
+plt.ylabel("Traffic")
+plt.title("ARIMA Forecast vs Actual")
+plt.legend()
 plt.show()
