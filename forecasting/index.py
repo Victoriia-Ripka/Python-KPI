@@ -19,12 +19,8 @@ plt.title("Site Activity")
 plt.legend()
 plt.show()
 
-# Train-test split
-train_size = int(len(df) * 0.8)
-train, test = df['traffic'][:train_size], df['traffic'][train_size:]
-
 # Fit ARIMA model
-model = ARIMA(train, order=(5, 1, 0))
+model = ARIMA(df['traffic'], order=(5, 1, 0))
 model_fit = model.fit()
 
 # Summary of the model
