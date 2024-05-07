@@ -24,7 +24,7 @@ train_size = int(len(df) * 0.8)
 train, test = df['traffic'][:train_size], df['traffic'][train_size:]
 
 # Fit ARIMA model
-model = ARIMA(train, order=(5, 1, 0))
+model = ARIMA(train, order=(3, 1, 0))
 model_fit = model.fit()
 
 # Forecast

@@ -20,7 +20,7 @@ plt.legend()
 plt.show()
 
 # Fit ARIMA model
-model = ARIMA(df['traffic'], order=(5, 1, 0))
+model = ARIMA(df['traffic'], order=(6, 1, 0))
 model_fit = model.fit()
 
 # Summary of the model
@@ -28,7 +28,7 @@ print(model_fit.summary())
 
 # Diagnostic plots
 residuals = model_fit.resid
-fig, ax = plt.subplots(1, 3, figsize=(15, 5))  # Adding one more plot for PACF
+fig, ax = plt.subplots(1, 3, figsize=(15, 5))  
 plot_acf(residuals, ax=ax[0])
 plot_pacf(residuals, ax=ax[1])
 ax[2].plot(df['Date'], df['traffic'].diff(1))  # Plot differenced series to check for trend
