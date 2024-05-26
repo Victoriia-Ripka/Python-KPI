@@ -1,6 +1,4 @@
 from spacy_llm.util import assemble # type: ignore
-import logging
-import spacy_llm # type: ignore
 import pymongo # type: ignore
 from prettytable import PrettyTable # type: ignore
 import os
@@ -8,6 +6,8 @@ from pathlib import Path
 from datetime import datetime
 from dotenv import load_dotenv # type: ignore
 import time
+from django.http import JsonResponse # type: ignore
+
 
 load_dotenv()
 mongoDB_connection = os.getenv("MONGODB_CONNECTION")
@@ -64,6 +64,7 @@ class Assistant:
             try:
                 doc = self.nlp(user_input)
                 intent = self.identify_intent(user_input)
+                print(intent)
                 response = ""
 
                 # згідно до наміру - щось робити
@@ -73,11 +74,11 @@ class Assistant:
                 elif intent == 'орендувати':
                     self.analize_order(doc)
                 elif intent in ["привітання", 'додаткова_інформація'] :
-                    self.analize_specific_request(doc)
+                    return self.analize_specific_request(doc)
                 elif intent in ["переглянути_машини", "оновити_базу_даних"]:
-                    self.do_manage(doc)
+                    return self.do_manage(doc)
                 elif intent in ["переглянути_відгуки", "залишити_відгук"]:
-                    self.analize_feedback()
+                    return self.analize_feedback()
                 elif intent == 'нічого':
                     print("Я можу вам допомогти орендувати машину для власних потреб. \nОсь що ми маємо:")
                     result = self.cars.find({})
@@ -88,11 +89,7 @@ class Assistant:
                 return response
             except ConnectionError as e:
                 print(f"Connection error: {e}")
-                return 0
-
-
-    def greeting(self):
-        print('Привіт, радий Вас бачити. Чим Вам допомогти?') 
+                return JsonResponse({'error': 'Connection error'}, status=500)
 
 
     def set_key_env_var(self):
@@ -124,76 +121,29 @@ class Assistant:
                 return selected_intent
       
 
-    # Manager part
-    def is_manager(self, manager_name):
-        manager = self.managers.find_one({"name": manager_name})
-        if manager is not None:
-            self.isManager = True
-        return self.isManager
-        
-
-    def close_manager_communication(self):
-        answer = input("Чи менеджер закінчив свою роботу? так/ні: ")
-        if answer.lower() == 'так':
-            self.isManager = False
-
-
     def review_feedback(self):
-        self.questions_count -= 1
-        if not self.isManager:
-            are_you_manager = input("Чи ви менеджер? (так/ні): ")
-            if are_you_manager.lower() == "так":
-                manager_name = input("Як вас звати?: ")
-                if self.is_manager(manager_name):
-                    print("Ось зворотній зв'язок від користувачів:")
-                    for feedback in self.feedback.find():
-                        print(feedback['title'], '\n', feedback['text'], '\n\n')
-                    self.close_manager_communication()
-                else:
-                    print("Хтось тут мухлює. Ви не є менеджером нашої фірми.")
-                    return False
-            else:
-                print("Вибачте, тільки менеджери мають доступ до даної інформації.")
-                return False
-        else:
-            print("Ось зворотній зв'язок від користувачів:")
-            for feedback in self.feedback.find():
-                    print(feedback['title'], '\n', feedback['text'], '\n\n')
-            self.close_manager_communication()
+        feedback_text = "Ось зворотній зв'язок від користувачів:\n"
+        for feedback in self.feedback.find():
+            feedback_text += f"{feedback['title']}\n{feedback['text']}\n\n"
+        return feedback_text
+
     
 
     def do_manage(self, doc):
-        if not self.isManager:
-            are_you_manager = input("Чи ви менеджер? (так/ні): ")
-            if are_you_manager.lower() == "так":
-                manager_name = input("Як вас звати?: ")
-                if self.is_manager(manager_name):
-                    if self.intent == "переглянути_машини":
-                        return self.check_cars_for_repair()
-                    elif self.intent == "оновити_базу_даних":
-                        return self.update_car()
-
-                else:
-                    print("Хтось тут мухлює. Ви не є менеджером нашої фірми.")
-            else:
-                print("Вибачте, тільки менеджери мають доступ до даної інформації.")
-        
-        else: 
-            if self.intent == "переглянути_машини":
-                return self.check_cars_for_repair()
-            elif self.intent == "оновити_базу_даних":
-                return self.update_car()
+        if self.intent == "переглянути_машини":
+            return self.check_cars_for_repair()
+        elif self.intent == "оновити_базу_даних":
+            return self.update_car()
 
            
     def check_cars_for_repair(self):
-        self.questions_count -= 1
-
-        print("Ось список автомобілів, які потребують ремонту:")
         repair_cars = self.cars.find({"neededRemont": True})
-        self.show_cars(repair_cars)
-
-        self.close_manager_communication()
-        return True
+        cars_for_repair_text = "Ось список автомобілів, які потребують ремонту:"
+        for car in repair_cars:
+            cars_for_repair_text += f"{car['brand']} {car['model']} ({car['year']}),"
+        if cars_for_repair_text.endswith(','):
+            cars_for_repair_text = cars_for_repair_text[:-1] + "."
+        return cars_for_repair_text
 
 
     def update_car(self):
@@ -219,7 +169,7 @@ class Assistant:
     # Feedback part
     def analize_feedback(self):
         if self.intent == "переглянути_відгуки":
-                self.review_feedback()
+            return self.review_feedback()
         elif self.intent == "залишити_відгук":
             self.create_feedback()
     
@@ -315,12 +265,12 @@ class Assistant:
     
 
     def show_cars(self, cars):
-        table = PrettyTable()
-        table.field_names = ["Brand", "Model", "Year", "Color", "Automatic", "Cost"]
+        table_html = "<table>"
+        table_html += "<tr><th>Brand</th><th>Model</th><th>Year</th><th>Color</th><th>Automatic</th><th>Cost</th></tr>"
         for car in cars:
-                table.add_row([car['brand'], car['model'], car['year'], car['color'], car['automat'], car['cost']])
-
-        print(table)
+            table_html += f"<tr><td>{car['brand']}</td><td>{car['model']}</td><td>{car['year']}</td><td>{car['color']}</td><td>{car['automat']}</td><td>{car['cost']}</td></tr>"
+        table_html += "</table>"
+        return table_html
 
 
     # FAQ part
@@ -362,9 +312,9 @@ class Assistant:
             price = self.get_prices(doc, token)
             if price:
                 prices = price
-
+        
         if greeting:
-            responses.append("Вітаю вас знову.")
+            responses.append("Привіт, радий Вас бачити. Чим Вам допомогти?")
         if colors:
             responses.append("У нас є машини у наступних кольорах: ")
             for color in colors:
@@ -402,7 +352,8 @@ class Assistant:
         if responses:
             if self.questions_count % 5 == 0:
                 responses.append("Може хочете орендувати одну із наших машин?")
-            return " ".join(responses)
+            response_text = " ".join(responses)
+            return response_text
         else:
             if not self.isManager:
                 return "Я не зрозумів вашого повідомлення. Я можу допомогти вам обрати машину для оренди."

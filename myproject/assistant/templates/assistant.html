@@ -5,9 +5,13 @@
 {% block content %}
 <main class="form-page">
     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-    <h1>Ask the Assistant</h1>
-    <textarea id="userInput" rows="4" cols="50"></textarea><br>
-    <button onclick="sendRequest()">Send</button>
+    <div style="margin-bottom: 20px; display: flex; align-items: flex-end; justify-content: flex-start; gap: 40px;">
+        <div>
+            <label for"userInput">Ask the Assistant</label>
+            <input id="userInput" type="text" style="width: 400px;"></input>
+        </div>
+        <button onclick="sendRequest()" style="height: 52px;">ask</button>
+    </div>
     <p id="response"></p>
 
     <script>
@@ -19,11 +23,12 @@
                     'Content-Type': 'application/json',
                     'X-CSRFToken': '{{ csrf_token }}'
                 },
-                body: 'user_input=' + encodeURIComponent(userInput)
+                body: JSON.stringify({ user_input: userInput })
             })
             .then(response => response.json())
             .then(data => {
-                document.getElementById('response').innerText = data.response;
+                console.log(data)
+                document.getElementById('response').innerText = "Answer: " + data.response;
             });
         }
     </script>
