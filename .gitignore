@@ -1,3 +1,4 @@
 img_recognition/program/__pycache__/
 pandas/__pycache__/
 .env
+myproject/myenv/

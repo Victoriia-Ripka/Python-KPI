@@ -11,6 +11,7 @@
 
 # myproject 
 > cd myproject
+> myenv\Scripts\activate
 > python manage.py runserver
 
 # img_recognition
@@ -20,3 +21,4 @@
 # Forecasting
 > cd forecasting
 > python index.py
+
