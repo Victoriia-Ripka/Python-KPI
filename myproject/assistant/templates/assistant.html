@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<main class="form-page">
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+    <h1>Ask the Assistant</h1>
+    <textarea id="userInput" rows="4" cols="50"></textarea><br>
+    <button onclick="sendRequest()">Send</button>
+    <p id="response"></p>
+
+    <script>
+        function sendRequest() {
+            var userInput = document.getElementById('userInput').value;
+            fetch('/assistant/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: 'user_input=' + encodeURIComponent(userInput)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('response').innerText = data.response;
+            });
+        }
+    </script>
+</main>
+{% endblock %}

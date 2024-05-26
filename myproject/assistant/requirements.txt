@@ -1,0 +1,6 @@
+spacy_llm
+pymongo
+prettytable
+python-dotenv
+pymorphy3
+pymorphy3-dicts-uk
