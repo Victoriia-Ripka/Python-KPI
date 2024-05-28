@@ -26,13 +26,3 @@ def assistant_view(request):
         return JsonResponse({'error': 'Only POST and GET requests are allowed'}, status=405)
 
 
-
-
-
-# def assistant_view(request):
-#     if request.method == 'POST':
-#         data = json.loads(request.body)
-#         user_input = data.get('user_input')
-#         response = assistant.assist(user_input)  # Assume assist method takes input and returns a response
-#         return JsonResponse({'response': response})
-#     return render(request, 'assistant/assistant.html')
