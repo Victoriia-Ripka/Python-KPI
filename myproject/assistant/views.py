@@ -12,7 +12,7 @@ def assistant_view(request):
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
-            user_input = data.get('user_input')  #, ''
+            user_input = data.get('user_input')
             print(user_input)
             response = assistant.assist(user_input)
             return JsonResponse({'response': response})
