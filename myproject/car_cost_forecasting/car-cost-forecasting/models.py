@@ -55,10 +55,51 @@ class CarPricePredictor:
         X, y = self.preprocess_data()
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
+        # LinearRegression
+        # self.model = Pipeline(steps=[
+        #     ('preprocessor', self.preprocessor),
+        #     ('regressor', LinearRegression())
+        # ])
+        # DecisionTreeRegressor
+        # self.model = Pipeline(steps=[
+        #     ('preprocessor', self.preprocessor),
+        #     ('regressor', DecisionTreeRegressor(random_state=42))
+        # ])
+        # RandomForestRegressor
+        # self.model = Pipeline(steps=[
+        #     ('preprocessor', self.preprocessor),
+        #     ('regressor', RandomForestRegressor(random_state=42))
+        # ])
+        # GradientBoostingRegressor
+        # self.model = Pipeline(steps=[
+        #     ('preprocessor', self.preprocessor),
+        #     ('regressor', GradientBoostingRegressor(random_state=42))
+        # ])
+        # SVR
+        # self.model = Pipeline(steps=[
+        #     ('preprocessor', self.preprocessor),
+        #     ('regressor', SVR(kernel='rbf'))
+        # ])
+        # KNeighborsRegressor
+        # self.model = Pipeline(steps=[
+        #     ('preprocessor', self.preprocessor),
+        #     ('regressor', KNeighborsRegressor())
+        # ])
+        # Ridge
         self.model = Pipeline(steps=[
             ('preprocessor', self.preprocessor),
             ('regressor', Ridge())
         ])
+        # Lasso
+        # self.model = Pipeline(steps=[
+        #     ('preprocessor', self.preprocessor),
+        #     ('regressor', Lasso())
+        # ])
+        # ElasticNet
+        # self.model = Pipeline(steps=[
+        #     ('preprocessor', self.preprocessor),
+        #     ('regressor', ElasticNet())
+        # ])
 
         self.model.fit(X_train, y_train)
 
