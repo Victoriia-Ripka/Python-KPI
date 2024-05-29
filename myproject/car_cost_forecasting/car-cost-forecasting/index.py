@@ -2,17 +2,29 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LinearRegression
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.svm import SVR
+from sklearn.linear_model import Lasso
+from sklearn.linear_model import Ridge
+from sklearn.neighbors import KNeighborsRegressor
+from sklearn.linear_model import ElasticNet
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 import numpy as np
 
 
+
 class CarPricePredictor:
-    def __init__(self, data):
-        self.data = data
+    def __init__(self):
+        self.data = pd.read_csv('Cleaned_Car_Sales_Data.csv')
         self.model = None
         self.preprocessor = None
+        self.train_model()
+
 
     def preprocess_data(self):
         # Preprocessing the data
@@ -38,18 +50,68 @@ class CarPricePredictor:
 
         return X, y
 
+
     def train_model(self):
         X, y = self.preprocess_data()
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-        # Create and train the model pipeline
+        # LinearRegression
+        # self.model = Pipeline(steps=[
+        #     ('preprocessor', self.preprocessor),
+        #     ('regressor', LinearRegression())
+        # ])
+        # DecisionTreeRegressor
+        # self.model = Pipeline(steps=[
+        #     ('preprocessor', self.preprocessor),
+        #     ('regressor', DecisionTreeRegressor(random_state=42))
+        # ])
+        # RandomForestRegressor
+        # self.model = Pipeline(steps=[
+        #     ('preprocessor', self.preprocessor),
+        #     ('regressor', RandomForestRegressor(random_state=42))
+        # ])
+        # GradientBoostingRegressor
+        # self.model = Pipeline(steps=[
+        #     ('preprocessor', self.preprocessor),
+        #     ('regressor', GradientBoostingRegressor(random_state=42))
+        # ])
+        # SVR
+        # self.model = Pipeline(steps=[
+        #     ('preprocessor', self.preprocessor),
+        #     ('regressor', SVR(kernel='rbf'))
+        # ])
+        # KNeighborsRegressor
+        # self.model = Pipeline(steps=[
+        #     ('preprocessor', self.preprocessor),
+        #     ('regressor', KNeighborsRegressor())
+        # ])
+        # Ridge
         self.model = Pipeline(steps=[
             ('preprocessor', self.preprocessor),
-            ('regressor', LinearRegression())
+            ('regressor', Ridge())
         ])
+        # Lasso
+        # self.model = Pipeline(steps=[
+        #     ('preprocessor', self.preprocessor),
+        #     ('regressor', Lasso())
+        # ])
+        # ElasticNet
+        # self.model = Pipeline(steps=[
+        #     ('preprocessor', self.preprocessor),
+        #     ('regressor', ElasticNet())
+        # ])
 
         self.model.fit(X_train, y_train)
-        print(f'Model training completed. R^2 score on test data: {self.model.score(X_test, y_test)}')
+
+        # Evaluate the model
+        y_pred = self.model.predict(X_test)
+        print("Model: Ridge")
+        print(f'R^2 score on test data: {r2_score(y_test, y_pred)}')
+        print(f'Mean Absolute Error (MAE): {mean_absolute_error(y_test, y_pred)}')
+        print(f'Mean Squared Error (MSE): {mean_squared_error(y_test, y_pred)}')
+        print(f'Root Mean Squared Error (RMSE): {np.sqrt(mean_squared_error(y_test, y_pred))}')
+        print(f'Model training completed.')
+
 
     def predict_price(self, brand, model, engine_size, horsepower, latest_launch_year):
         car_features = pd.DataFrame({
@@ -68,8 +130,7 @@ class CarPricePredictor:
         return predicted_price[0]
 
 
-data = pd.read_csv('Cleaned_Car_Sales_Data.csv')
-predictor = CarPricePredictor(data)
-predictor.train_model()
+
+predictor = CarPricePredictor()
 predicted_price = predictor.predict_price('Audi', 'A4', 2.0, 200, '2015')
 print(f'Predicted Price: {predicted_price}')
