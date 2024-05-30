@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'myapp',
     'assistant',
+    'car_cost_forecasting'
 ]
 
 MIDDLEWARE = [
