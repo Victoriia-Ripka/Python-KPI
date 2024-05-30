@@ -26,4 +26,5 @@ urlpatterns = [
     path('form/', views.form_view, name='form'),
     path('admin/', admin.site.urls),
     path('', include('assistant.urls')),
+    path('forecast/', include('car_cost_forecasting.urls')),
 ]
