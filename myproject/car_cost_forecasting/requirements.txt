@@ -1,0 +1,2 @@
+pip install dotenv, pandas, prettytable, scikit-learn
+python -m spacy download uk_core_news_lg
