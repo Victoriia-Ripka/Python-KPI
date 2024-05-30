@@ -243,6 +243,25 @@ footer>.p {
     gap: 30px;
 }
 
+.form-cont-forecast{
+    margin-top: 30px;
+    display: flex;
+    align-items: self-start;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.results-block {
+    margin-top: 60px;
+    width: 340px;
+}
+
+.result-add-stub {
+    margin-top: 40px;
+    height: 340px;
+    background: #000;
+}
+
 .contacts__details-cont {
     margin: 30px 0 0 !important;
     display: flex;
@@ -314,6 +333,43 @@ label {
     letter-spacing: 1.6px;
     text-transform: uppercase;
     margin-bottom: 10px;
+}
+
+.results-header1 {
+    display: block;
+    color: #122952;
+    font-family: Poppins;
+    font-size: 26px;
+    line-height: 1;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    text-align: start;
+    margin-bottom: 10px;
+}
+
+.results-block h3 {
+    color: #0F2650;
+    font-size: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.forecast__form-extra-cont {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.forecast__form-extra-cont label {
+    font-size: 18px;
+}
+
+.forecast-submit-btn {
+    margin-left: auto;
+    margin-right: auto;
+    width: 400px;
 }
 
 .contacts__form-extra-cont {
