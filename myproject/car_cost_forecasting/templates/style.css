@@ -252,14 +252,14 @@ footer>.p {
 }
 
 .results-block {
-    margin-top: 60px;
+    margin-top: 39px;
     width: 340px;
 }
 
 .result-add-stub {
     margin-top: 40px;
     height: 340px;
-    background: #000;
+    {% comment %} background: #000; {% endcomment %}
 }
 
 .contacts__details-cont {
