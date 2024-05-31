@@ -259,7 +259,11 @@ footer>.p {
 .result-add-stub {
     margin-top: 40px;
     height: 340px;
-    background: #000;
+}
+
+.result-add-stub img{
+    width: 200px;
+    height: 200px;
 }
 
 .contacts__details-cont {
